@@ -1,0 +1,60 @@
+mysql> Select Count(*) From Customer Where City = "Berlin";
++----------+
+| Count(*) |
++----------+
+|        2 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> Select Track.Name as Track, SUM(UnitPrice * Quantity) from InvoiceLine
+    -> INNER JOIN Track ON InvoiceLine.TrackId = Track.TrackId
+    -> WHERE Track.Name = "The Woman King";
+ERROR 1052 (23000): Column 'UnitPrice' in field list is ambiguous
+mysql> Select Track.Name as Track, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) from InvoiceLine
+    -> INNER JOIN Track ON InvoiceLine.TrackId = Track.TrackId
+    -> WHERE Track.Name = "The Woman King";
++-------+---------------------------------------------------+
+| Track | SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) |
++-------+---------------------------------------------------+
+| NULL  |                                              NULL |
++-------+---------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> Select Track.Name as Track, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) from InvoiceLine
+    -> INNER JOIN Track on InvoiceLine.TrackId = Track.TrackId
+    -> WHERE Track.Name = "The Woman King";
++-------+---------------------------------------------------+
+| Track | SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) |
++-------+---------------------------------------------------+
+| NULL  |                                              NULL |
++-------+---------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> Select Track.Name as Track, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) from InvoiceLine
+    -> JOIN Track ON InvoiceLine.TrackId = Track.TrackId
+    -> WHERE Track.Name = "The Woman King";
++-------+---------------------------------------------------+
+| Track | SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) |
++-------+---------------------------------------------------+
+| NULL  |                                              NULL |
++-------+---------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT Artist.Name AS Artist, COUNT(Track.TrackId) AS Track FROM Artist
+    -> JOIN Album ON Artist.ArtistId = Album.ArtistId
+    -> JOIN Track ON Album.AlbumId = Track.AlbumId
+    -> GROUP BY Artist.Name
+    -> ORDER BY COUNT(Artist.Name)
+    -> DESC LIMIT 5;
++--------------+-------+
+| Artist       | Track |
++--------------+-------+
+| Iron Maiden  |   213 |
+| U2           |   135 |
+| Led Zeppelin |   114 |
+| Metallica    |   112 |
+| Lost         |    92 |
++--------------+-------+
+5 rows in set (0.01 sec)
+
+mysql> notee

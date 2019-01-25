@@ -1,0 +1,102 @@
+mysql> select count(*) from Customer;
+ERROR 2006 (HY000): MySQL server has gone away
+No connection. Trying to reconnect...
+Connection id:    50
+Current database: Chinook
+
++----------+
+| count(*) |
++----------+
+|       59 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select count(*) from Customer
+    -> where FirstName = "Frank";
++----------+
+| count(*) |
++----------+
+|        2 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(FirstName) FROM Customer WHERE SupportRepId = 4;
++------------------+
+| COUNT(FirstName) |
++------------------+
+|               20 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> notee
+mysql> select concat(Customer.FirstName, " ", Customer.LastName) as CustomerNames, Count(concat(Employee.FirstName, " ", Employee.LastName)) as EmployeeNames from Employee INNER JOIN Customer on Employee.EmployeeId = Customer.SupportRepId WHERE Employee.FirstName = "Jane";
++------------------+---------------+
+| CustomerNames    | EmployeeNames |
++------------------+---------------+
+| Luís Gonçalves   |            21 |
++------------------+---------------+
+1 row in set (0.00 sec)
+
+mysql> notee
+mysql> Select * from MediaType;
++-------------+-----------------------------+
+| MediaTypeId | Name                        |
++-------------+-----------------------------+
+|           1 | MPEG audio file             |
+|           2 | Protected AAC audio file    |
+|           3 | Protected MPEG-4 video file |
+|           4 | Purchased AAC audio file    |
+|           5 | AAC audio file              |
++-------------+-----------------------------+
+5 rows in set (0.00 sec)
+
+mysql> select Track.Name as Track, Count(MediaType.Name) as MediaType from Track
+    -> INNER JOIN MediaType on Track.MediaTypeId = MediaType.MediaTypeId;
++-----------------------------------------+-----------+
+| Track                                   | MediaType |
++-----------------------------------------+-----------+
+| For Those About To Rock (We Salute You) |      3503 |
++-----------------------------------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select Track.Name as Track, Count(MediaType.Name) as MediaType from Track INNER JOIN MediaType on Track.MediaTypeId = MediaType.MediaTypeId Where MediaType.Name = "MPEG audio file";
++-----------------------------------------+-----------+
+| Track                                   | MediaType |
++-----------------------------------------+-----------+
+| For Those About To Rock (We Salute You) |      3034 |
++-----------------------------------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select Track.Name as Track, Count(MediaType.Name) as MediaType from Track INNER JOIN MediaType on Track.MediaTypeId = MediaType.MediaTypeId Where MediaType.Name = "Protected AAC audio file";
++-------------------+-----------+
+| Track             | MediaType |
++-------------------+-----------+
+| Balls to the Wall |       237 |
++-------------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select Track.Name as Track, Count(MediaType.Name) as MediaType from Track INNER JOIN MediaType on Track.MediaTypeId = MediaType.MediaTypeId Where MediaType.Name = "Protected MPEG-4 video file";
++----------------------------------------+-----------+
+| Track                                  | MediaType |
++----------------------------------------+-----------+
+| Battlestar Galactica: The Story So Far |       214 |
++----------------------------------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select Track.Name as Track, Count(MediaType.Name) as MediaType from Track INNER JOIN MediaType on Track.MediaTypeId = MediaType.MediaTypeId Where MediaType.Name = "Purchased AAC audio file";
++----------+-----------+
+| Track    | MediaType |
++----------+-----------+
+| War Pigs |         7 |
++----------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select Track.Name as Track, Count(MediaType.Name) as MediaType from Track INNER JOIN MediaType on Track.MediaTypeId = MediaType.MediaTypeId Where MediaType.Name = "AAC audio file";
++--------+-----------+
+| Track  | MediaType |
++--------+-----------+
+| Amanda |        11 |
++--------+-----------+
+1 row in set (0.00 sec)
+
+mysql> notee
